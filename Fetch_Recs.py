@@ -8,14 +8,26 @@ tmdb = TMDb()
 tmdb.api_key = api
 tv = TV()
 movie = Movie() 
-def SearchMovie():
-    s = input()
+
+s = None
+def MovieTitle(movie_name):
+    global s
+    s = movie_name
+
+def RecomendMovie(s):
     film = movie.search(s)
-    rec = film.id
+    rec = film
+    
+    for res in rec:
+        rec = res.id
+        break
+    
     rec = movie.recommendations(movie_id=rec)
     for recommendation in rec:
-        print(recommendation.title+"\n")
-        print(recommendation.overview+"\n")    
+        title = recommendation.title
+        desc = recommendation.overview
+        break 
+    return title, desc
 
 def SearchTV():
     s = input()
@@ -24,6 +36,3 @@ def SearchTV():
         print("")
         print(result.name+"\n")
         print(result.overview+"\n")
-
-SearchMovie()
-SearchTV()
