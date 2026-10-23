@@ -9,17 +9,24 @@ app = QtWidgets.QApplication(sys.argv)
 UI = Path(__file__).resolve().parent / "UI.ui"
 window = uic.loadUi(UI)
 
+def submit_movie():
+    load_movie_name()
+    DisplayMovie()
+
 def MovieName():
-    return window.input.text().strip
+    return window.input.text()
+
+def load_movie_name():
+    movie_name = MovieName()
+    Movie.MovieTitle(movie_name)
 
 def DisplayMovie():
-    movie_name = MovieName()
-    title, desc = Movie.RecomendMovie(Movie.s)
+    title, desc = Movie.RecomendMovie()
     window.label_1.setText(title)
     window.label_2.setText(desc)
    
-window.input.returnPressed.connect(DisplayMovie)
-window.Search.clicked.connect(DisplayMovie)
+window.input.returnPressed.connect(submit_movie)
+window.Search.clicked.connect(submit_movie)
 
 window.show()
 sys.exit(app.exec())

@@ -14,25 +14,17 @@ def MovieTitle(movie_name):
     global s
     s = movie_name
 
-def RecomendMovie(s):
+def RecomendMovie():
     film = movie.search(s)
     rec = film
     
     for res in rec:
-        rec = res.id
+        id = int(res.id)
         break
     
-    rec = movie.recommendations(movie_id=rec)
+    rec = movie.recommendations(movie_id=id)
     for recommendation in rec:
         title = recommendation.title
         desc = recommendation.overview
         break 
     return title, desc
-
-def SearchTV():
-    s = input()
-    show = tv.search(s)
-    for result in show:
-        print("")
-        print(result.name+"\n")
-        print(result.overview+"\n")
