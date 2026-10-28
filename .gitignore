@@ -1,2 +1,5 @@
 KEYS.env
 __pycache__/
+test.py
+dist/
+build/
