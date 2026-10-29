@@ -52,20 +52,18 @@ def RecomendShow():
 
 def PopularMovie():
     popular = movie.popular()
-    
     for p in popular:
         title = p.title
         desc = p.overview
-        poster =PosterPath+ p.poster_path
+        poster = PosterPath+ p.poster_path
         break
     return title, desc, poster
 
 def PopularShow():
     popular = tv.popular()
-    
     for p in popular:
         title = p.name
         desc = p.overview
-        poster =PosterPath+ p.poster_path
+        poster = PosterPath+ p.poster_path
         break
     return title, desc, poster

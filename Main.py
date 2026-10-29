@@ -1,21 +1,16 @@
 from PyQt6 import QtCore, QtWidgets, uic
-from PyQt6.QtWidgets import QCheckBox
 from PyQt6.QtGui import QPixmap
 from urllib.request import urlopen
 from pathlib import Path
 import Fetch_Recs as Movie
 import sys
-
-app = QtWidgets.QApplication(sys.argv)
 UI = Path(__file__).resolve().parent / "UI.ui"
+app = QtWidgets.QApplication(sys.argv)
 window = uic.loadUi(UI)
-
+checker = None
 def submit_movie():
     load_media_name()
-    if window.checkBox.isChecked():
-        DisplayShow()
-    else:
-        DisplayMovie()
+    Display()
 
 def Name():
     return window.input.text()
@@ -42,25 +37,19 @@ def show_poster(poster):
         QtCore.Qt.AspectRatioMode.KeepAspectRatio
     )
 
-def DisplayMovie():
+def Display():
     try:
-        title, desc, poster = Movie.RecomendMovie()
+        if window.checkBox.isChecked():
+            title, desc, poster = Movie.RecomendShow()
+        else:
+            title, desc, poster = Movie.RecomendMovie()
         window.label_1.setText(title)
         window.label_2.setText(desc)
         show_poster(poster)
     except Exception as error:
-        QtWidgets.QMessageBox.critical(window, "Couldnt find a movie",str(error))
+        QtWidgets.QMessageBox.critical(window, "Couldnt find a anything",str(error))
 
-def DisplayShow():
-    try:
-        title, desc, poster = Movie.RecomendShow()
-        window.label_1.setText(title)
-        window.label_2.setText(desc)
-        show_poster(poster)
-    except Exception as error:
-        QtWidgets.QMessageBox.critical(window, "Couldnt find a show",str(error))
-
-def PopularMovie():
+def Popular():
     try:
         if window.checkBox.isChecked():
             title, desc, poster = Movie.PopularShow()
@@ -74,7 +63,7 @@ def PopularMovie():
 
 window.input.returnPressed.connect(submit_movie)
 window.Search.clicked.connect(submit_movie)
-window.popular.clicked.connect(PopularMovie)
+window.popular.clicked.connect(Popular)
 
 window.show()
 sys.exit(app.exec())
